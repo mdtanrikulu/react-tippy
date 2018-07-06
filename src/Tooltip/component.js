@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import tippy from './js/tippy';
 
 const defaultProps = {
-  customTag: 'div'
+  customTag: 'div',
   html: null,
   position: 'top',
   animation: 'shift',

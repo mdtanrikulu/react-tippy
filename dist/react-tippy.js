@@ -401,6 +401,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var defaultProps = {
+  customTag: 'div',
   html: null,
   position: 'top',
   animation: 'shift',
@@ -464,9 +465,6 @@ var Tooltip = function (_Component) {
     _this.showTooltip = _this._showTooltip.bind(_this);
     _this.hideTooltip = _this._hideTooltip.bind(_this);
     _this.updateSettings = _this._updateSettings.bind(_this);
-    _this.state = {
-      customTag: "div"
-    };
     return _this;
   }
 
@@ -475,12 +473,6 @@ var Tooltip = function (_Component) {
     value: function componentDidMount() {
       if (typeof window === 'undefined' || typeof document === 'undefined') {
         return;
-      }
-      var parentNodeTag = _reactDom2.default.findDOMNode(this).parentNode.nodeName;
-      if (parentNodeTag === 'SVG') {
-        this.setState({
-          customTag: 'g'
-        });
       }
       this.initTippy();
     }
@@ -673,7 +665,7 @@ var Tooltip = function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      var CustomTag = this.state.customTag;
+      var CustomTag = this.props.customTag;
       return _react2.default.createElement(
         CustomTag,
         {
