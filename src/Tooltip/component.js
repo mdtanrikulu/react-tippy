@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import tippy from './js/tippy';
 
 const defaultProps = {
+  customTag: 'div'
   html: null,
   position: 'top',
   animation: 'shift',
@@ -61,20 +62,11 @@ class Tooltip extends Component {
     this.showTooltip = this._showTooltip.bind(this);
     this.hideTooltip = this._hideTooltip.bind(this);
     this.updateSettings = this._updateSettings.bind(this);
-    this.state = {
-      customTag: "div"
-    }
   }
 
   componentDidMount() {
     if (typeof window === 'undefined' || typeof document === 'undefined' ) {
       return;
-    }
-    const parentNodeTag = ReactDOM.findDOMNode(this).parentNode.nodeName
-    if(parentNodeTag === 'SVG'){
-      this.setState({
-        customTag: 'g'
-      })
     }
     this.initTippy();
   }
@@ -253,7 +245,7 @@ class Tooltip extends Component {
   }
 
   render() {
-    const CustomTag = this.state.customTag
+    const CustomTag = this.props.customTag
     return (
       <CustomTag
         ref={(tooltip) => { this.tooltipDOM = tooltip; }}
