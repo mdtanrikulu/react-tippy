@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"), require("popper.js"), require("react-dom"));
+		module.exports = factory(require("react"), require("react-dom"), require("popper.js"));
 	else if(typeof define === 'function' && define.amd)
-		define("reactTippy", ["react", "popper.js", "react-dom"], factory);
+		define("reactTippy", ["react", "react-dom", "popper.js"], factory);
 	else if(typeof exports === 'object')
-		exports["reactTippy"] = factory(require("react"), require("popper.js"), require("react-dom"));
+		exports["reactTippy"] = factory(require("react"), require("react-dom"), require("popper.js"));
 	else
-		root["reactTippy"] = factory(root["React"], root["Popper"], root["ReactDOM"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_13__, __WEBPACK_EXTERNAL_MODULE_38__, __WEBPACK_EXTERNAL_MODULE_39__) {
+		root["reactTippy"] = factory(root["React"], root["ReactDOM"], root["Popper"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_13__, __WEBPACK_EXTERNAL_MODULE_14__, __WEBPACK_EXTERNAL_MODULE_39__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -384,7 +384,11 @@ var _react = __webpack_require__(13);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _tippy = __webpack_require__(30);
+var _reactDom = __webpack_require__(14);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _tippy = __webpack_require__(31);
 
 var _tippy2 = _interopRequireDefault(_tippy);
 
@@ -460,6 +464,9 @@ var Tooltip = function (_Component) {
     _this.showTooltip = _this._showTooltip.bind(_this);
     _this.hideTooltip = _this._hideTooltip.bind(_this);
     _this.updateSettings = _this._updateSettings.bind(_this);
+    _this.state = {
+      customTag: "div"
+    };
     return _this;
   }
 
@@ -468,6 +475,12 @@ var Tooltip = function (_Component) {
     value: function componentDidMount() {
       if (typeof window === 'undefined' || typeof document === 'undefined') {
         return;
+      }
+      var parentNodeTag = _reactDom2.default.findDOMNode(this).parentNode.nodeName;
+      if (parentNodeTag === 'SVG') {
+        this.setState({
+          customTag: 'g'
+        });
       }
       this.initTippy();
     }
@@ -660,8 +673,9 @@ var Tooltip = function (_Component) {
     value: function render() {
       var _this3 = this;
 
+      var CustomTag = this.state.customTag;
       return _react2.default.createElement(
-        'div',
+        CustomTag,
         {
           ref: function ref(tooltip) {
             _this3.tooltipDOM = tooltip;
@@ -840,6 +854,12 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_13__;
 
 /***/ }),
 /* 14 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_14__;
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -877,7 +897,7 @@ var withTooltip = function withTooltip(Component) {
 exports.default = withTooltip;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -892,7 +912,7 @@ var _component = __webpack_require__(9);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _hoc = __webpack_require__(14);
+var _hoc = __webpack_require__(15);
 
 var _hoc2 = _interopRequireDefault(_hoc);
 
@@ -902,7 +922,7 @@ exports.Tooltip = _component2.default;
 exports.withTooltip = _hoc2.default;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -915,7 +935,7 @@ exports.default = bindEventListeners;
 
 var _globals = __webpack_require__(0);
 
-var _hideAllPoppers = __webpack_require__(25);
+var _hideAllPoppers = __webpack_require__(26);
 
 var _hideAllPoppers2 = _interopRequireDefault(_hideAllPoppers);
 
@@ -1031,7 +1051,7 @@ function bindEventListeners() {
 }
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1147,7 +1167,7 @@ function createPopperElement(id, title, settings) {
 }
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1161,7 +1181,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 exports.default = createPopperInstance;
 
-var _popper = __webpack_require__(38);
+var _popper = __webpack_require__(39);
 
 var _popper2 = _interopRequireDefault(_popper);
 
@@ -1252,7 +1272,7 @@ function createPopperInstance(data) {
 }
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1263,23 +1283,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = createTooltips;
 
-var _getIndividualSettings = __webpack_require__(24);
+var _getIndividualSettings = __webpack_require__(25);
 
 var _getIndividualSettings2 = _interopRequireDefault(_getIndividualSettings);
 
-var _createPopperElement = __webpack_require__(17);
+var _createPopperElement = __webpack_require__(18);
 
 var _createPopperElement2 = _interopRequireDefault(_createPopperElement);
 
-var _createTrigger = __webpack_require__(20);
+var _createTrigger = __webpack_require__(21);
 
 var _createTrigger2 = _interopRequireDefault(_createTrigger);
 
-var _getEventListenerHandlers = __webpack_require__(23);
+var _getEventListenerHandlers = __webpack_require__(24);
 
 var _getEventListenerHandlers2 = _interopRequireDefault(_getEventListenerHandlers);
 
-var _evaluateSettings = __webpack_require__(21);
+var _evaluateSettings = __webpack_require__(22);
 
 var _evaluateSettings2 = _interopRequireDefault(_evaluateSettings);
 
@@ -1343,7 +1363,7 @@ function createTooltips(els) {
 }
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1410,7 +1430,7 @@ function createTrigger(event, el, handlers, touchHold) {
 }
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1441,7 +1461,7 @@ function evaluateSettings(settings) {
 }
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1469,7 +1489,7 @@ function getArrayOfElements(selector) {
 }
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1490,7 +1510,7 @@ var _closest = __webpack_require__(4);
 
 var _closest2 = _interopRequireDefault(_closest);
 
-var _cursorIsOutsideInteractiveBorder = __webpack_require__(32);
+var _cursorIsOutsideInteractiveBorder = __webpack_require__(33);
 
 var _cursorIsOutsideInteractiveBorder2 = _interopRequireDefault(_cursorIsOutsideInteractiveBorder);
 
@@ -1640,7 +1660,7 @@ function getEventListenerHandlers(el, popper, settings) {
 }
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1686,7 +1706,7 @@ function getIndividualSettings(el, instanceSettings) {
 }
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1728,7 +1748,7 @@ function hideAllPoppers(exclude) {
 }
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1739,7 +1759,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = init;
 
-var _bindEventListeners = __webpack_require__(16);
+var _bindEventListeners = __webpack_require__(17);
 
 var _bindEventListeners2 = _interopRequireDefault(_bindEventListeners);
 
@@ -1759,7 +1779,7 @@ function init() {
 }
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1815,7 +1835,7 @@ function makeSticky(refData) {
 }
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1832,7 +1852,7 @@ var _followCursorHandler = __webpack_require__(10);
 
 var _followCursorHandler2 = _interopRequireDefault(_followCursorHandler);
 
-var _createPopperInstance = __webpack_require__(18);
+var _createPopperInstance = __webpack_require__(19);
 
 var _createPopperInstance2 = _interopRequireDefault(_createPopperInstance);
 
@@ -1877,7 +1897,7 @@ function mountPopper(data) {
 }
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1934,7 +1954,7 @@ function onTransitionEnd(data, duration, callback) {
 }
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1956,11 +1976,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _globals = __webpack_require__(0);
 
-var _reactDom = __webpack_require__(39);
+var _reactDom = __webpack_require__(14);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _init = __webpack_require__(26);
+var _init = __webpack_require__(27);
 
 var _init2 = _interopRequireDefault(_init);
 
@@ -1976,7 +1996,7 @@ var _find = __webpack_require__(2);
 
 var _find2 = _interopRequireDefault(_find);
 
-var _findIndex = __webpack_require__(34);
+var _findIndex = __webpack_require__(35);
 
 var _findIndex2 = _interopRequireDefault(_findIndex);
 
@@ -1984,15 +2004,15 @@ var _removeTitle = __webpack_require__(12);
 
 var _removeTitle2 = _interopRequireDefault(_removeTitle);
 
-var _elementIsInViewport = __webpack_require__(33);
+var _elementIsInViewport = __webpack_require__(34);
 
 var _elementIsInViewport2 = _interopRequireDefault(_elementIsInViewport);
 
-var _triggerReflow = __webpack_require__(37);
+var _triggerReflow = __webpack_require__(38);
 
 var _triggerReflow2 = _interopRequireDefault(_triggerReflow);
 
-var _modifyClassList = __webpack_require__(35);
+var _modifyClassList = __webpack_require__(36);
 
 var _modifyClassList2 = _interopRequireDefault(_modifyClassList);
 
@@ -2000,7 +2020,7 @@ var _getInnerElements4 = __webpack_require__(6);
 
 var _getInnerElements5 = _interopRequireDefault(_getInnerElements4);
 
-var _applyTransitionDuration = __webpack_require__(31);
+var _applyTransitionDuration = __webpack_require__(32);
 
 var _applyTransitionDuration2 = _interopRequireDefault(_applyTransitionDuration);
 
@@ -2008,7 +2028,7 @@ var _isVisible = __webpack_require__(7);
 
 var _isVisible2 = _interopRequireDefault(_isVisible);
 
-var _noop = __webpack_require__(36);
+var _noop = __webpack_require__(37);
 
 var _noop2 = _interopRequireDefault(_noop);
 
@@ -2016,23 +2036,23 @@ var _followCursorHandler = __webpack_require__(10);
 
 var _followCursorHandler2 = _interopRequireDefault(_followCursorHandler);
 
-var _getArrayOfElements = __webpack_require__(22);
+var _getArrayOfElements = __webpack_require__(23);
 
 var _getArrayOfElements2 = _interopRequireDefault(_getArrayOfElements);
 
-var _onTransitionEnd = __webpack_require__(29);
+var _onTransitionEnd = __webpack_require__(30);
 
 var _onTransitionEnd2 = _interopRequireDefault(_onTransitionEnd);
 
-var _mountPopper = __webpack_require__(28);
+var _mountPopper = __webpack_require__(29);
 
 var _mountPopper2 = _interopRequireDefault(_mountPopper);
 
-var _makeSticky = __webpack_require__(27);
+var _makeSticky = __webpack_require__(28);
 
 var _makeSticky2 = _interopRequireDefault(_makeSticky);
 
-var _createTooltips = __webpack_require__(19);
+var _createTooltips = __webpack_require__(20);
 
 var _createTooltips2 = _interopRequireDefault(_createTooltips);
 
@@ -2508,7 +2528,7 @@ tippy.enableDynamicInputDetection = function () {
 exports.default = tippy;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2547,7 +2567,7 @@ function applyTransitionDuration(els, duration) {
 }
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2610,7 +2630,7 @@ function cursorIsOutsideInteractiveBorder(event, popper, settings) {
 }
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2632,7 +2652,7 @@ function elementIsInViewport(el) {
 }
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2665,7 +2685,7 @@ function findIndex(arr, checkFn) {
 }
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2688,7 +2708,7 @@ function modifyClassList(els, callback) {
 }
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2701,7 +2721,7 @@ exports.default = noop;
 function noop() {}
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2727,12 +2747,6 @@ function triggerReflow(tooltip, circle) {
   // Safari needs the specific 'transform' property to be accessed
   circle ? window.getComputedStyle(circle)[(0, _prefix2.default)('transform')] : window.getComputedStyle(tooltip).opacity;
 }
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_38__;
 
 /***/ }),
 /* 39 */
