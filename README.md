@@ -120,7 +120,7 @@ const HeaderWithTootip = withTooltip(Header, {
 |theme|`dark`|`dark` `light` `transparent`|The CSS styling theme.|
 |className|''|string|className of container|
 |style|{}|React inline style (object)|style of container|
-|customTag|'div'|string|wrapper of tooltip|
+|customTag|div|string ("g" for svg)|wrapper of tooltip|
 
 
 ## Custom tooltip content
